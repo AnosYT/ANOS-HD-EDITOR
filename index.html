@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0f">
+<title>ANOS HD EDITOR</title>
+<style>
+:root{--bg:#0b0b0f;--panel:#15151c;--line:#292933;--red:#f04444;--muted:#a5a5b2;--white:#f7f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+header{padding:18px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:#0b0b0fee;backdrop-filter:blur(12px);z-index:3}
+.logo{font-weight:900;letter-spacing:1px;font-size:22px}.logo span{color:var(--red)}nav a{color:#ddd;text-decoration:none;margin-left:18px;font-size:14px}
+.hero{padding:54px 20px 30px;text-align:center;max-width:900px;margin:auto}.tag{color:#ff7777;font-size:12px;letter-spacing:3px;font-weight:bold}
+h1{font-size:clamp(36px,7vw,68px);margin:14px 0 10px;line-height:1.02}.hero p{color:var(--muted);line-height:1.6}
+.btn{display:inline-block;background:var(--red);color:white;border:0;border-radius:9px;padding:12px 18px;font-weight:bold;text-decoration:none;cursor:pointer}
+.btn.secondary{background:#25252e;border:1px solid var(--line)}.wrap{max-width:1120px;margin:auto;padding:18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin-bottom:18px}
+h2{font-size:19px;margin:0 0 14px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.editor-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.preview{background:#050507;border-radius:10px;min-height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+video{width:100%;max-height:440px;display:block}.placeholder{color:#777;text-align:center;padding:35px}
+input[type=file]{width:100%;padding:12px;border:1px dashed #555;border-radius:9px;background:#101016;color:#ddd}
+label{display:block;font-size:13px;color:#ddd;margin:13px 0 6px}input[type=text],select{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:#0d0d13;color:white}
+input[type=range]{width:100%;accent-color:var(--red)}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.feature{background:#111118;border:1px solid var(--line);border-radius:12px;padding:16px}.feature b{display:block;margin:7px 0}.feature span{font-size:22px}
+footer{text-align:center;padding:30px;color:#888;font-size:12px}
+#status{margin-top:12px;color:#ffaaaa;font-size:13px;white-space:pre-wrap}
+@media(max-width:760px){nav{display:none}.editor-grid{grid-template-columns:1fr}.features{grid-template-columns:1fr 1fr}.hero{padding-top:38px}}
+@media(max-width:420px){.features{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="logo">ANOS <span>HD EDITOR</span></div><nav><a href="#editor">Editor</a><a href="#features">Features</a><a href="#about">About</a></nav></header>
+<section class="hero">
+<div class="tag">ANOS YT CREATOR STUDIO</div>
+<h1>EDIT VIDEOS.<br><span style="color:var(--red)">LEVEL UP.</span></h1>
+<p>A simple browser-based video editor for creators. Add captions, adjust the picture and export your video.</p>
+<a class="btn" href="#editor">Start Editing</a>
+</section>
+<main class="wrap">
+<section class="panel" id="editor">
+<h2>🎬 Video Editor</h2>
+<div class="editor-grid">
+<div>
+<div class="preview" id="preview"><div class="placeholder">Your video preview will appear here</div></div>
+<label for="videoFile">Upload a video</label><input id="videoFile" type="file" accept="video/*">
+<div class="actions"><button class="btn secondary" id="playBtn" type="button">▶ Play / Pause</button><button class="btn secondary" id="resetBtn" type="button">Reset adjustments</button></div>
+<p class="muted">Your selected video stays in your browser in this basic version. Do not close this page while exporting.</p>
+</div>
+<div>
+<label for="caption">Caption text</label><input id="caption" type="text" placeholder="Write your caption...">
+<label for="fontSize">Caption size: <span id="fontLabel">32</span> px</label><input id="fontSize" type="range" min="16" max="64" value="32">
+<label for="brightness">Brightness: <span id="brightLabel">100</span>%</label><input id="brightness" type="range" min="50" max="150" value="100">
+<label for="contrast">Contrast: <span id="contrastLabel">100</span>%</label><input id="contrast" type="range" min="50" max="180" value="100">
+<label for="saturation">Saturation: <span id="satLabel">100</span>%</label><input id="saturation" type="range" min="0" max="200" value="100">
+<div class="two">
+<div><label for="resolution">Export size</label><select id="resolution"><option value="720">720p</option><option value="1080" selected>1080p</option><option value="2160">4K (may be slow)</option></select></div>
+<div><label for="fps">FPS</label><select id="fps"><option>24</option><option selected>30</option><option>60</option></select></div>
+</div>
+<div class="actions"><button class="btn" id="exportBtn" type="button" disabled>Export Video</button><a class="btn secondary" id="downloadLink" hidden download="ANOS-HD-VIDEO.webm">Download video</a></div>
+<div id="status">Upload a video to enable export.</div>
+</div>
+</div>
+</section>
+<section class="panel" id="features"><h2>✨ Creator Tools</h2><div class="features">
+<div class="feature"><span>💬</span><b>Caption Overlay</b><small class="muted">Add text to your video.</small></div>
+<div class="feature"><span>🎨</span><b>Picture Adjustments</b><small class="muted">Brightness, contrast and colour.</small></div>
+<div class="feature"><span>📺</span><b>HD Export</b><small class="muted">Choose 720p, 1080p or 4K output size.</small></div>
+<div class="feature"><span>🎧</span><b>Audio</b><small class="muted">Keeps source audio when browser support allows.</small></div>
+</div>
+<p class="muted" style="margin-top:14px">Note: AI upscaling, automatic speech-to-text captions and AI background-noise removal are not included in this starter version. They need additional AI models or services and may have usage costs. Export support depends on your browser; Chrome desktop is recommended.</p>
+</section>
+<section class="panel" id="about"><h2>About ANOS YT</h2><p class="muted">ANOS HD EDITOR is a creator-focused editing website. Built for the ANOS YT community.</p></section>
+</main>
+<footer>© <span id="year"></span> ANOS HD EDITOR · Made for creators</footer>
+<script>
+const $=id=>document.getElementById(id);
+const file=$('videoFile'),preview=$('preview'),exportBtn=$('exportBtn'),status=$('status');
+let video=null,objectUrl=null,raf=0,recorder=null,parts=[];
+$('year').textContent=new Date().getFullYear();
+function updateFilters(){
+ if(video) video.style.filter=`brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturation').value}%)`;
+ $('brightLabel').textContent=$('brightness').value;
+ $('contrastLabel').textContent=$('contrast').value;
+ $('satLabel').textContent=$('saturation').value;
+ $('fontLabel').textContent=$('fontSize').value;
+}
+['brightness','contrast','saturation','fontSize'].forEach(id=>$(id).addEventListener('input',updateFilters));
+file.addEventListener('change',()=>{
+ const f=file.files[0];if(!f)return;
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ objectUrl=URL.createObjectURL(f);
+ if(video)video.remove();
+ video=document.createElement('video');video.src=objectUrl;video.controls=true;video.playsInline=true;video.preload='metadata';
+ preview.innerHTML='';preview.appendChild(video);exportBtn.disabled=false;
+ status.textContent=`Loaded: ${f.name}`;
+ updateFilters();
+});
+$('playBtn').onclick=()=>{if(video){video.paused?video.play():video.pause();}};
+$('resetBtn').onclick=()=>{['brightness','contrast','saturation'].forEach(id=>$(id).value=100);$('fontSize').value=32;updateFilters();};
+function drawFrame(ctx,c,w,h){
+ ctx.clearRect(0,0,w,h);
+ ctx.filter=`brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturation').value}%)`;
+ ctx.filter=`brightness(${$('brightness').value}%) contrast(${$('contrast').value}%) saturate(${$('saturation').value}%)`;
+ const text=$('caption').value.trim();
+ if(text){
+  const size=Math.round(Number($('fontSize').value)*w/1280);
+  ctx.font=`bold ${size}px Arial`;ctx.textAlign='center';ctx.textBaseline='bottom';
+  ctx.lineWidth=Math.max(2,size*.12);ctx.strokeStyle='#000';ctx.fillStyle='#fff';
+  const max=w*.9;let lines=[],line='';
+  for(const word of text.split(/\s+/)){const test=line?line+' '+word:word;if(ctx.measureText(test).width>max&&line){lines.push(line);line=word;}else line=test;}
+  if(line)lines.push(line);
+  lines.forEach((l,i)=>{const y=h-35-(lines.length-1-i)*size*1.25;ctx.strokeText(l,w/2,y,max);ctx.fillText(l,w/2,y,max);});
+ }
+}
+exportBtn.onclick=async()=>{
+ if(!video||!video.videoWidth){status.textContent='Please upload a valid video first.';return;}
+ if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){status.textContent='Your browser does not support video export. Try Chrome on a computer.';return;}
+ exportBtn.disabled=true;$('downloadLink').hidden=true;status.textContent='Preparing export...';
+ const height=Number($('resolution').value),width=Math.round(height*video.videoWidth/video.videoHeight);
+ const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+ const ctx=canvas.getContext('2d');
+ const stream=canvas.captureStream(Number($('fps').value));
+ try{const audio=video.captureStream?.().getAudioTracks()||[];audio.forEach(t=>stream.addTrack(t));}catch(e){}
+ const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));
+ if(!mime){status.textContent='No supported export format found in this browser.';exportBtn.disabled=false;return;}
+ parts=[];recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:height>=2160?16000000:height>=1080?8000000:4500000});
+ recorder.ondataavailable=e=>{if(e.data.size)parts.push(e.data);};
+ const oldMuted=video.muted;video.muted=true;
+ let stopped;
+ const finished=new Promise(resolve=>{recorder.onstop=resolve;});
+ const paint=()=>{if(!video.paused&&!video.ended){drawFrame(ctx,canvas,width,height);raf=requestAnimationFrame(paint);}};
+ video.pause();video.currentTime=0;
+ await new Promise(resolve=>{video.onseeked=resolve;});
+ drawFrame(ctx,canvas,width,height);recorder.start(500);
+ try{await video.play();}catch(e){status.textContent='Could not start video playback for export.';recorder.stop();exportBtn.disabled=false;return;}
+ paint();
+ const timer=setInterval(()=>{
+  const pct=video.duration?Math.round(video.currentTime/video.duration*100):0;
+  status.textContent=`Exporting... ${pct}%`;
+  if(video.ended){clearInterval(timer);cancelAnimationFrame(raf);recorder.stop();}
+ },250);
+ await finished;clearInterval(timer);cancelAnimationFrame(raf);video.pause();video.muted=oldMuted;
+ stream.getTracks().forEach(t=>t.stop());
+ const blob=new Blob(parts,{type:mime}),url=URL.createObjectURL(blob);
+ const a=$('downloadLink');a.href=url;a.hidden=false;a.download='ANOS-HD-VIDEO.webm';
+ status.textContent='Export complete! Tap Download video.';
+ exportBtn.disabled=false;
+};
+</script>
+</body>
+</html>
